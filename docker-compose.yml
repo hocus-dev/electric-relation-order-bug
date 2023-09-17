@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  db:
+    image: "postgres:15.4-alpine"
+    command: postgres -c 'max_connections=10000' -c 'wal_level=logical'
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: demo
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 1s
+      timeout: 10s
+      retries: 30
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./migrations:/migrations
+
+  electric:
+    image: electricsql/electric:0.5.3
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/demo"
+      LOGICAL_PUBLISHER_HOST: "electric"
+      OFFSET_STORAGE_FILE: "/app/data/offset_storage.dat"
+      AUTH_MODE: "secure"
+      AUTH_JWT_ALG: "HS256"
+      AUTH_JWT_KEY: "11111111111111111111111111111111"
+    ports:
+      - "5050:5050"
+      - "5133:5133"
+    volumes:
+      - electric-data:/app/data
+    depends_on:
+      - db
+
+volumes:
+  db-data:
+  electric-data:

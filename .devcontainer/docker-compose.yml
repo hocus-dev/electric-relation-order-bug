@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  dev:
+    build:
+      dockerfile: .devcontainer/Dockerfile
+      context: ".."
+    volumes:
+      - ..:/home/node/workspace:cached
+    restart: unless-stopped
+    command: sleep infinity
