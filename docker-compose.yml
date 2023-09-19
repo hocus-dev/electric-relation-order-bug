@@ -20,7 +20,7 @@ services:
       - ./migrations:/migrations
 
   electric:
-    image: electricsql/electric:0.5.3
+    image: electricsql/electric:0.6.0
     environment:
       DATABASE_URL: "postgresql://postgres:postgres@db:5432/demo"
       LOGICAL_PUBLISHER_HOST: "electric"

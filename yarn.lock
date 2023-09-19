@@ -565,10 +565,10 @@ detect-libc@^2.0.0:
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-2.0.2.tgz#8ccf2ba9315350e1241b88d0ac3b0e1fbd99605d"
   integrity sha512-UX6sGumvvqSaXgdKGUsgZWqcUyIXZ/vZTrlRT/iobiKhGL0zL4d3osHj3uqllWJK+i+sixDS/3COVEOFbupFyw==
 
-electric-sql@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.5.3.tgz#9a370179a83456d068445ffeff7dd64d43078667"
-  integrity sha512-wAKeXnQnm7FfW+q/l0nmIAM7D4WkBLNmacHDMkoCrrNpn5p4VMzTHSwTPN27sK57CSewp0eKYJISjJmHupjTNg==
+electric-sql@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.6.0.tgz#c94dc15a91f4622792a0ceaad527627fe8883119"
+  integrity sha512-1mQcNtsDejU7SMENb3x6LtaKf7lYtj8zfq0FTv4IUgRhYciWPt+4HLRjtw23nrRq58Th62iqPIoaj5lH5GogHg==
   dependencies:
     async-mutex "^0.4.0"
     base-64 "^1.0.0"

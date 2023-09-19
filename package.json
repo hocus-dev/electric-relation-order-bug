@@ -5,7 +5,7 @@
   "dependencies": {
     "@prisma/client": "^5.3.1",
     "@types/node": "20.6.0",
-    "electric-sql": "^0.5.3",
+    "electric-sql": "^0.6.0",
     "typescript": "5.2.2",
     "wa-sqlite": "rhashimoto/wa-sqlite#master"
   },
