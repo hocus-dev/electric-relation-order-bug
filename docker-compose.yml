@@ -3,36 +3,35 @@ version: "3"
 services:
   db:
     image: "postgres:15.4-alpine"
-    command: postgres -c 'max_connections=10000' -c 'wal_level=logical'
-    ports:
-      - "5432:5432"
+    command: postgres -c 'max_connections=10000' -c 'max_logical_replication_workers=200' -c 'wal_level=logical' #-c 'log_min_messages=debug'
+    restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: demo
+      POSTGRES_DB: bug
+      PGDATA: /pgtmpfs
+    ports:
+      - "5432:5432"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 1s
       timeout: 10s
       retries: 30
-    volumes:
-      - db-data:/var/lib/postgresql/data
-      - ./migrations:/migrations
+    tmpfs:
+      - /pgtmpfs
 
   electric:
-    image: electricsql/electric:0.6.0
+    image: electricsql/electric:0.6.3
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/demo"
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/bug"
       LOGICAL_PUBLISHER_HOST: "electric"
-      OFFSET_STORAGE_FILE: "/app/data/offset_storage.dat"
       AUTH_MODE: "secure"
       AUTH_JWT_ALG: "HS256"
       AUTH_JWT_KEY: "11111111111111111111111111111111"
+      LOG_LEVEL: "debug"
     ports:
       - "5050:5050"
       - "5133:5133"
-    volumes:
-      - electric-data:/app/data
     depends_on:
       - db
 

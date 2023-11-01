@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:postgres@localhost:5432/bug?schema=public"
+}
+
+model DataTable {
+  id String @id @db.Uuid
+  n String
+  columns                  Column[]
+}
+
+model Column {
+  id String @id @db.Uuid
+  reference_set_id String @unique @db.Uuid
+  n String
+  table_id               String              @db.Uuid
+  column_reference_set   ColumnReferenceSet? @relation(fields: [reference_set_id], references: [id], onDelete: Cascade)
+  table                 DataTable            @relation(fields: [table_id], references: [id], onDelete: Cascade)
+}
+
+model ColumnReferenceSet {
+  id String @id @db.Uuid
+  n String
+  column           Column?
+  columnReferences ColumnReference[]
+}
+
+model ColumnReference {
+  id String @id @db.Uuid
+  n String
+  reference_set_id String @db.Uuid
+
+  column_reference_set   ColumnReferenceSet? @relation(fields: [reference_set_id], references: [id], onDelete: Cascade)
+}
